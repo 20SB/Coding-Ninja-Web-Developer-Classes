@@ -1,0 +1,34 @@
+public class Solution {
+
+	/*
+	 * Binary Tree Node class
+	 * 
+	 * class BinaryTreeNode<T> { T data; BinaryTreeNode<T> left; BinaryTreeNode<T> right;
+	 * 
+	 * public BinaryTreeNode(T data) { this.data = data; } }
+	 */
+
+
+	
+	public static int getLCA(BinaryTreeNode<Integer> root, int a, int b) {
+		if (root == null){
+			return -1;
+		}
+		int ans;
+		if(root.data<a){
+			ans = getLCA(root.right, a, b);
+		}
+		else if(b<root.data){
+			ans = getLCA(root.left, a, b);
+		}
+		else{
+			return root.data;
+		}
+		if(ans==-1){
+			return -1;
+		}
+		else{
+			return ans;
+		}
+	}
+}
