@@ -1,0 +1,47 @@
+/*
+	
+	Following is the structure used to represent the Binary Tree Node
+
+	class BinaryTreeNode<T> {
+		T data;
+		BinaryTreeNode<T> left;
+		BinaryTreeNode<T> right;
+
+		public BinaryTreeNode(T data) {
+			this.data = data;
+			this.left = null;
+			this.right = null;
+		}
+	}
+
+*/
+class BTR{
+	int height;
+	int diameter;
+}
+public class Solution {
+
+	public static BTR dbt(BinaryTreeNode<Integer> root){
+		if (root == null) {
+			BTR ans = new BTR();
+			ans.height = 0;
+			ans.diameter = 0;
+			return ans;
+		}
+		BTR lo = dbt(root.left);
+		BTR ro = dbt(root.right);
+		int height = 1 + Math.max(lo.height, ro.height);
+		int diameter = Math.max(lo.height+ro.height +1 , Math.max(lo.diameter , ro.diameter));
+		BTR ans = new BTR();
+		ans.height = height;
+		ans.diameter = diameter;
+		return ans;
+	}
+	public static int diameterOfBinaryTree(BinaryTreeNode<Integer> root){
+		//Your code goes here
+		BTR result = dbt(root);
+		return result.diameter ;
+		
+	}
+	
+}

@@ -1,0 +1,58 @@
+/*
+	
+	Following is the structure used to represent the Binary Tree Node
+
+	class BinaryTreeNode<T> {
+		T data;
+		BinaryTreeNode<T> left;
+		BinaryTreeNode<T> right;
+
+		public BinaryTreeNode(T data) {
+			this.data = data;
+			this.left = null;
+			this.right = null;
+		}
+	}
+
+*/
+
+
+
+/*
+
+	Representation of the Pair Class
+
+	class Pair<T, U> {
+		T minimum;
+		U maximum;
+
+		public Pair(T minimum, U maximum) {
+			this.minimum = minimum;
+			this.maximum = maximum;
+		}
+
+	}
+
+*/
+
+public class Solution {
+
+	public static Pair<Integer, Integer> getMinAndMax(BinaryTreeNode<Integer> root) {
+		//Your code goes here
+		if(root == null){
+			Pair<Integer, Integer> res=  new Pair<>(Integer.MAX_VALUE, Integer.MIN_VALUE);
+			return res;
+		}
+		Pair<Integer, Integer> leftAns = getMinAndMax(root.left);
+		Pair<Integer, Integer> rightAns = getMinAndMax(root.right);
+		
+		
+		Pair<Integer, Integer> res = new Pair<>(0, 0);
+		res.minimum = Math.min(root.data, Math.min(leftAns.minimum , rightAns.minimum));
+		res.maximum = Math.max(root.data, Math.max(leftAns.maximum, rightAns.maximum));
+
+		return res;
+
+	}
+	
+}

@@ -1,0 +1,55 @@
+/*
+	
+	Following is the structure used to represent the Binary Tree Node
+
+	class BinaryTreeNode<T> {
+		T data;
+		BinaryTreeNode<T> left;
+		BinaryTreeNode<T> right;
+
+		public BinaryTreeNode(T data) {
+			this.data = data;
+			this.left = null;
+			this.right = null;
+		}
+	}
+
+*/
+
+public class Solution {
+
+	public static BinaryTreeNode<Integer> bt(int[] inOrder, int isi, int iei, int[] postOrder, int psi, int pei) {
+
+		if (isi > iei || psi > pei) {
+			return null;
+		}
+		int rt = postOrder[pei];
+		BinaryTreeNode<Integer> root = new BinaryTreeNode<>(rt);
+
+		int k = 0;
+		for (int i = isi; i <= iei; i++) {
+			if (inOrder[i] == rt) {
+				k = i;
+				break;
+			}
+		}
+		BinaryTreeNode<Integer> leftTree = bt(inOrder, isi, k - 1, postOrder, psi, psi + (k - isi-1));
+		BinaryTreeNode<Integer> rightTree = bt(inOrder, k + 1, iei, postOrder, psi + (k - isi), pei - 1);
+		root.left = leftTree;
+		root.right = rightTree;
+		return root;
+
+	}
+
+	public static BinaryTreeNode<Integer> buildTree(int[] postOrder, int[] inOrder) {
+		// Your code goes here
+		int n = postOrder.length;
+		int isi = 0;
+		int iei = n - 1;
+		int psi = 0;
+		int pei = n - 1;
+		BinaryTreeNode<Integer> root = bt(inOrder, isi, iei, postOrder, psi, pei);
+		return root;
+	}
+
+}

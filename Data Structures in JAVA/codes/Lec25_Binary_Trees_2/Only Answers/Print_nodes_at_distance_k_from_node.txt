@@ -1,0 +1,62 @@
+
+/*
+	
+	Following is the structure used to represent the Binary Tree Node
+
+	class BinaryTreeNode<T> {
+		T data;
+		BinaryTreeNode<T> left;
+		BinaryTreeNode<T> right;
+
+		public BinaryTreeNode(T data) {
+			this.data = data;
+			this.left = null;
+			this.right = null;
+		}
+	}
+
+*/
+
+public class Solution {
+
+	public static void print(BinaryTreeNode<Integer> root, int k) {
+		if (root == null || k < 0)
+			return;
+		if (k == 0) {
+			System.out.print(root.data);
+			System.out.println("");
+			return;
+		}
+		print(root.left, k - 1);
+		print(root.right, k - 1);
+	}
+
+	public static int nodesAtDistanceK(BinaryTreeNode<Integer> root, int node, int k) {
+		if (root == null)
+			return -1;
+		if (root.data == node) {
+			print(root, k);
+			return 0;
+		}
+		int left = nodesAtDistanceK(root.left, node, k);
+		if (left != -1) {
+			if (left + 1 == k) {
+				System.out.print(root.data);
+				System.out.println("");
+			} else
+				print(root.right, k - left - 2);
+			return 1 + left;
+		}
+		int right = nodesAtDistanceK(root.right, node, k);
+		if (right != -1) {
+			if (right + 1 == k) {
+				System.out.print(root.data);
+				System.out.println("");
+			} else
+				print(root.left, k - right - 2);
+			return 1 + right;
+		}
+		return -1;
+	}
+
+}

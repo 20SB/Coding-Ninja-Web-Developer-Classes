@@ -1,0 +1,70 @@
+/*
+	
+	Following is the structure used to represent the Binary Tree Node
+
+	class BinaryTreeNode<T> {
+		T data;
+		BinaryTreeNode<T> left;
+		BinaryTreeNode<T> right;
+
+		public BinaryTreeNode(T data) {
+			this.data = data;
+			this.left = null;
+			this.right = null;
+		}
+	}
+
+*/
+
+public class Solution {
+
+	public static int findRootIndex(int[] arr, int x){
+		
+		int si = 0 , ei = arr.length-1;
+		int finalIndex = 0;
+		while(si <= ei){
+			int mid = (si +ei)/2;
+			if(arr[mid] == x){
+				finalIndex = mid;
+				break;
+			}
+			else if(arr[mid] > x){
+				ei = mid-1;
+			}
+			else{
+				si = mid+1;
+			}
+		}
+		return finalIndex;
+	}
+	public static BinaryTreeNode<Integer> buildTree(int[] preOrder, int[] inOrder) {
+		//Your code goes here
+		if(preOrder.length == 0 || inOrder.length == 0){
+			return null;
+		}
+		
+		int root = preOrder[0];
+		int rindex = findRootIndex(inOrder , root);
+		int leftLength = rindex;
+		int rightLength = inOrder.length - rindex -1;
+		int[] leftInOrder = new int[leftLength];
+		int[] rightInOrder = new int[rightLength];
+		int[] leftPreOrder = new int[leftLength];
+		int[] rightPreOrder = new int[rightLength];
+		for(int i=0 ; i<leftLength ; i++){
+			leftPreOrder[i] = preOrder[i+1];
+			leftInOrder[i] = inOrder[i];
+		}
+		for (int i = 0; i < rightLength; i++) {
+			rightPreOrder[i] = preOrder[leftLength + 1 + i];
+			rightInOrder[i] = inOrder[leftLength + 1 + i];
+		}
+		BinaryTreeNode<Integer> leftTree =  buildTree(leftPreOrder, leftInOrder);
+		BinaryTreeNode<Integer> rightTree = buildTree(rightPreOrder, rightInOrder);
+		BinaryTreeNode<Integer> r = new BinaryTreeNode<Integer>(root);
+		r.left = leftTree;
+		r.right = rightTree;
+		return r;
+	}
+
+}
